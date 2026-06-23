@@ -24,6 +24,10 @@ import { StepSection } from "./components/step-section";
 import { TalentSearch } from "./components/talent-search";
 import { TariffCompare } from "./components/tariff-compare";
 import { TariffSummary } from "./components/tariff-summary";
+import {
+  type SummaryPlatform,
+  WhatsappSummaryButton,
+} from "./components/whatsapp-summary";
 import { WindowToggle } from "./components/window-toggle";
 import { useCotizador } from "./use-cotizador";
 
@@ -95,6 +99,15 @@ export function CotizadorPage() {
   };
 
   const showAnalysis = analyzed && !loading;
+
+  // Datos para el resumen de WhatsApp (todos los posteos por red, para que el
+  // talento marque cuáles tuvieron pauta).
+  const summaryPlatforms: SummaryPlatform[] = activePlatforms.map((p) => ({
+    platform: p,
+    handle: state[p].handle,
+    posts: state[p].posts,
+  }));
+  const summaryName = mode === "existing" && talent ? talent.firstName : undefined;
 
   return (
     <div className="flex flex-col gap-8 pb-24 max-w-4xl">
@@ -262,16 +275,26 @@ export function CotizadorPage() {
                     Se carga con las redes, la demografía y estas tarifas ya completadas.
                   </p>
                 </div>
-                <Button variant="accent" size="lg" onClick={() => setShowAlta(true)}>
-                  <UserPlus className="h-4 w-4" />
-                  Dar de alta al talento
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <WhatsappSummaryButton name={summaryName} platforms={summaryPlatforms} />
+                  <Button variant="accent" size="lg" onClick={() => setShowAlta(true)}>
+                    <UserPlus className="h-4 w-4" />
+                    Dar de alta al talento
+                  </Button>
+                </div>
               </div>
             ) : talent ? (
               <TariffCompare
                 talent={talent}
                 results={results}
                 onUpdated={() => toast.success(`Tarifas de ${fullName(talent)} actualizadas`)}
+                summaryButton={
+                  <WhatsappSummaryButton
+                    name={summaryName}
+                    platforms={summaryPlatforms}
+                    size="default"
+                  />
+                }
               />
             ) : null}
           </div>

@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, Check, Minus, RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { CrmTalent } from "@/data/mock-talents";
 import { fmtARS, type Platform } from "@/lib/cotizador";
@@ -46,10 +46,12 @@ export function TariffCompare({
   talent,
   results,
   onUpdated,
+  summaryButton,
 }: {
   talent: CrmTalent;
   results: Partial<Record<Platform, PlatformResult>>;
   onUpdated: () => void;
+  summaryButton?: ReactNode;
 }) {
   const [phase, setPhase] = useState<"idle" | "confirming" | "done">("idle");
   const ig = results.instagram;
@@ -174,7 +176,9 @@ export function TariffCompare({
         </table>
       </div>
 
-      <div className="px-5 py-4 border-t border-slate-100 flex items-center justify-end gap-3">
+      <div className="px-5 py-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>{summaryButton}</div>
+        <div className="flex items-center justify-end gap-3">
         {phase === "done" ? (
           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600">
             <Check className="h-4 w-4" />
@@ -207,6 +211,7 @@ export function TariffCompare({
             Actualizar tarifas
           </Button>
         )}
+        </div>
       </div>
       {/* PROD: "Actualizar tarifas" hace PATCH de las tarifas unitarias del talento en el CRM. */}
     </div>
