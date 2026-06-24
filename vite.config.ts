@@ -4,6 +4,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  // En GitHub Pages la app vive en /cotizador-coretalents/. En dev y en Vercel, en la raíz.
+  base: process.env.GH_PAGES === "true" ? "/cotizador-coretalents/" : "/",
   plugins: [tailwindcss(), react()],
   resolve: {
     alias: {

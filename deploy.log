@@ -1,0 +1,20 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+Retrieving project…
+Deploying tomasbelluccis-projects/cotizador-coretalents
+Uploading [--------------------] (0.0B/158B)
+Uploading [====================] (158.0B/158B)
+Inspect: https://vercel.com/tomasbelluccis-projects/cotizador-coretalents/D2KNgUQWy2uy8zd9nKa6vc43T9oY [5s]
+Production: https://cotizador-coretalents-e52iz5m31-tomasbelluccis-projects.vercel.app [5s]
+Building...
+{
+  "status": "error",
+  "reason": "deploy_failed",
+  "message": "Not authorized",
+  "next": [
+    {
+      "command": "vercel deploy --scope tomasbelluccis-projects",
+      "when": "retry deploy"
+    }
+  ]
+}
+Error: Not authorized

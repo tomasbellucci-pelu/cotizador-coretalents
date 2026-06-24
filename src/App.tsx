@@ -17,7 +17,7 @@ function Shell() {
 export default function App() {
   return (
     <TooltipProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <Routes>
           <Route element={<Shell />}>
             <Route index element={<Navigate to="/cotizador" replace />} />
